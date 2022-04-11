@@ -2,6 +2,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const express = require('express')
 const db = require('./queries')
+const activity = require('./services/activity')
 const allSmartContracts = require('./services/allSmartContracts')
 const allTokens = require('./services/allTokens')
 
@@ -15,7 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 // allTokens()
 // allSmartContracts()
-
+// setInterval(() => activity(), 600000)
 
 
 app.get('/api/collections', db.readSmartContracts, (req, res) => {

@@ -64,7 +64,8 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
     // getImageToken(a[n-1].address, tokenId);
     if (response.data.nextToken) {
       callGetNFTsForCollectionOnce(a, response.data.nextToken);
-      nn = nn + 100;     
+      nn = nn + 100;
+     
       console.log(nn);
     } else {     
       const b = a[n].address;

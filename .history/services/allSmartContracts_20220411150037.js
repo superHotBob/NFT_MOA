@@ -58,14 +58,16 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
   if (n > -1) {
     const url = `${baseURL}/?contractAddress=${
       a[n].address
-    }&startToken=${startToken}`;    
+    }&startToken=${startToken}`;
+    console.log(a[12].address)
     const response = await axios.get(url);
     // const tokenId = response.data.nfts[0].id.tokenId;
     // getImageToken(a[n-1].address, tokenId);
     if (response.data.nextToken) {
       callGetNFTsForCollectionOnce(a, response.data.nextToken);
-      nn = nn + 100;     
-      console.log(nn);
+      nn = nn + 100;
+      n = n - 1;
+      console.log(n);
     } else {     
       const b = a[n].address;
       pool.query(
