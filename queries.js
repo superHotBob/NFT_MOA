@@ -1,9 +1,10 @@
+require('dotenv').config({path: __dirname + '/.env'})
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: "iuevfshp",
   host: "dumbo.db.elephantsql.com",
   database: "iuevfshp",
-  password: "ywDJ5rXh3ot6jqjRqw-X83xwzPDQ222c",
+  password: process.env.password,
   port: 5432,
 });
 
