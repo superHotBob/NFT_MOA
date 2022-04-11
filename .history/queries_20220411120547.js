@@ -34,7 +34,7 @@ const writeMinting = (a, b, c, d, e) => {
 };
 const readSmartContracts = (req,res) => { 
   const a = req.query.address
-  const b = '%' + req.query.name + '%'
+  const b = req.query.name + '%'
   if (a || b) {
   pool.query(
     "SELECT * FROM smartcontracts WHERE address = $1  OR name_collection LIKE $2 ",[a,b], 

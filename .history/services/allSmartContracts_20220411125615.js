@@ -67,10 +67,10 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
       callGetNFTsForCollectionOnce(a, response.data.nextToken);
       // nn = nn + 100;
       n = n - 1;
-      console.log(n);
+      console.log(nn);
     } else {
-      console.log(n);
-      // const b = a[n - 1].address;
+      console.log(nn);
+      const b = a[n - 1].address;
 
       // pool.query(
       //   "UPDATE smartcontracts SET token_count=$1 WHERE address=$2",

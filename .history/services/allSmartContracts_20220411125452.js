@@ -30,7 +30,7 @@ const tokenType = "erc721";
 function getImageToken(a, b) {
   const config = {
     method: "get",
-    url: `${baseURLTwo}?contractAddress=${a}&tokenId=${b}&tokenType=${tokenType}`,
+    url: `${baseURLTwo}?contractAddress=${a[11].address}&tokenId=${b}&tokenType=${tokenType}`,
     headers: {},
   };
   axios(config)
@@ -42,7 +42,7 @@ function getImageToken(a, b) {
       console.log(c);
       pool.query(
         "UPDATE smartcontracts  SET image = $2 WHERE address = $1",
-        [a, c],
+        [a.address, c],
         (error, results) => {
           if (error) {
             throw error;
@@ -62,15 +62,15 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
     }&startToken=${startToken}`;
     const response = await axios.get(url);
     const tokenId = response.data.nfts[0].id.tokenId;
-    getImageToken(a[n-1].address, tokenId);
+    getImageToken(a[n-1], tokenId);
     if (response.data.nextToken) {
       callGetNFTsForCollectionOnce(a, response.data.nextToken);
       // nn = nn + 100;
       n = n - 1;
-      console.log(n);
+      console.log(nn);
     } else {
-      console.log(n);
-      // const b = a[n - 1].address;
+      console.log(nn);
+      const b = a[n - 1].address;
 
       // pool.query(
       //   "UPDATE smartcontracts SET token_count=$1 WHERE address=$2",
