@@ -6,7 +6,7 @@ const pool = new Pool({
   user: "iuevfshp",
   host: "dumbo.db.elephantsql.com",
   database: "iuevfshp",
-  password: process.env.DATABASE_PASSWORD,
+  password: "ywDJ5rXh3ot6jqjRqw-X83xwzPDQ222c",
   port: 5432,
 });
 let contracts = [];
