@@ -99,6 +99,5 @@ module.exports = {
   writeActivity,
   writeMinting,
   readSmartContracts,
-  readAllTokens,
-  readOneToken
+  readAllTokens
 };
