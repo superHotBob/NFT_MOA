@@ -26,7 +26,7 @@ const readSmartContractsAddress = async (req, res) => {
       throw error;
     } else {
       contracts = result.rows;
-      // console.log(contracts.map((i) => i.address).join(" "));
+      console.log(contracts.map((i) => i.address).join(" "));
       writeConsole(contracts.map((i) => i.address).join(" "));
       res.send(
         `<h2 style="margin-top: 20vh;text-align: center;">
@@ -63,7 +63,7 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
       callGetNFTsForCollectionOnce(nextToken);
     } else {
       m = totalNftsFound.flat().length;
-      // console.log(`${contracts[n].address}  ':' ${m}`);     
+      console.log(`${contracts[n].address}  ':' ${m}`);     
       writeConsole(`${contracts[n].address}  ':' ${m}`)
       writeToBase(contracts);
      
