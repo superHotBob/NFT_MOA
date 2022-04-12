@@ -1,5 +1,4 @@
 const cors = require('cors')
-const fs = require('fs');
 const bodyParser = require('body-parser')
 const express = require('express')
 const db = require('./queries')
@@ -15,7 +14,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 // allTokens()
-// allSmartContracts()
+allSmartContracts()
 
 
 
@@ -32,13 +31,7 @@ app.get('/api/createbase' , auth, allTokens, (req, res) => {
   res.status(200).send(
     '<h1 style="margin-top: 40vh;text-align: center;">Base begining created</h1>')
 })
-app.get('/api/console' , (req, res) => {
 
-  fs.readFile('data.txt', function(err, data) {
-    res.status(200).send(
-      `<p style="margin-top: 40vh;text-align: center;">${data}</p>`)
-  });
-})
 
 app.get('/test_server', auth, (req, res) => {
   res.send(

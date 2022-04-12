@@ -16,7 +16,8 @@ const readSmartContractsAddress = async () => {
     } else {
       contracts = result.rows;     
     }
-    callGetNFTsForCollectionOnce(contracts);    
+    callGetNFTsForCollectionOnce(contracts);
+    console.log(contracts)
     // getImageToken(contracts);
   });
 };
@@ -55,15 +56,15 @@ const tokenType = "erc721";
 let n = 13;
 let nn = 0;
 async function callGetNFTsForCollectionOnce(a, startToken = "") {
-  if (n > 0) {
+  if (n > -1) {
     const url = `${baseURL}/?contractAddress=${
       a[n-1].address
     }&startToken=${startToken}`;    
     const response = await axios.get(url);
     const allTokensLength = response.data.nfts.map((i) => i.id.tokenId).length;
     // getImageToken(a[n-1].address, tokenId);
-    if (response.data.nextToken) {      
-      callGetNFTsForCollectionOnce(a, response.data.nextToken);
+    if (response.data.nextToken) {
+      callGetNFTsForCollectionOnce(a[n-1].address, response.data.nextToken);
       nn = nn + allTokensLength;     
       console.log(nn);
     } else {     

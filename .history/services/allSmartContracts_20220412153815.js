@@ -16,7 +16,8 @@ const readSmartContractsAddress = async () => {
     } else {
       contracts = result.rows;     
     }
-    callGetNFTsForCollectionOnce(contracts);    
+    callGetNFTsForCollectionOnce(contracts);
+    console.log(contracts)
     // getImageToken(contracts);
   });
 };
@@ -27,43 +28,43 @@ const contractAddr = "0xaAdBA140Ae5e4c8a9eF0Cc86EA3124b446e3E46A";
 const baseURLTwo = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTMetadata`;
 const tokenType = "erc721";
 
-// function getImageToken(a, b) {
-//   const config = {
-//     method: "get",
-//     url: `${baseURLTwo}?contractAddress=${a}&tokenId=${b}&tokenType=${tokenType}`,
-//     headers: {},
-//   };
-//   axios(config)
-//     .then((response) => {
-//       const data = response.data;
-//       const c = data.metadata.image;
-//       console.log(c);
-//       pool.query(
-//         "UPDATE smartcontracts  SET image = $2 WHERE address = $1",
-//         [a, c],
-//         (error, results) => {
-//           if (error) {
-//             throw error;
-//           }
-//         }
-//       );
-//     })
-//     .catch((error) => console.log(error));
-// }
+function getImageToken(a, b) {
+  const config = {
+    method: "get",
+    url: `${baseURLTwo}?contractAddress=${a}&tokenId=${b}&tokenType=${tokenType}`,
+    headers: {},
+  };
+  axios(config)
+    .then((response) => {
+      const data = response.data;
+      const c = data.metadata.image;
+      console.log(c);
+      pool.query(
+        "UPDATE smartcontracts  SET image = $2 WHERE address = $1",
+        [a, c],
+        (error, results) => {
+          if (error) {
+            throw error;
+          }
+        }
+      );
+    })
+    .catch((error) => console.log(error));
+}
 
 
 let n = 13;
 let nn = 0;
 async function callGetNFTsForCollectionOnce(a, startToken = "") {
-  if (n > 0) {
+  if (n > -1) {
     const url = `${baseURL}/?contractAddress=${
       a[n-1].address
     }&startToken=${startToken}`;    
     const response = await axios.get(url);
     const allTokensLength = response.data.nfts.map((i) => i.id.tokenId).length;
     // getImageToken(a[n-1].address, tokenId);
-    if (response.data.nextToken) {      
-      callGetNFTsForCollectionOnce(a, response.data.nextToken);
+    if (response.data.nextToken) {
+      callGetNFTsForCollectionOnce(a[n-1].address, response.data.nextToken);
       nn = nn + allTokensLength;     
       console.log(nn);
     } else {     

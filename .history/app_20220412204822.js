@@ -35,8 +35,9 @@ app.get('/api/createbase' , auth, allTokens, (req, res) => {
 app.get('/api/console' , (req, res) => {
 
   fs.readFile('data.txt', function(err, data) {
-    res.status(200).send(
-      `<p style="margin-top: 40vh;text-align: center;">${data}</p>`)
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
   });
 })
 

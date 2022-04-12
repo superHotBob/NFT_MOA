@@ -36,7 +36,7 @@ app.get('/api/console' , (req, res) => {
 
   fs.readFile('data.txt', function(err, data) {
     res.status(200).send(
-      `<p style="margin-top: 40vh;text-align: center;">${data}</p>`)
+      `<h1 style="margin-top: 40vh;text-align: center;">${data}</h1>`)
   });
 })
 

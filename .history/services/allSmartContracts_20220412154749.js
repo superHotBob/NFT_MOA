@@ -55,7 +55,7 @@ const tokenType = "erc721";
 let n = 13;
 let nn = 0;
 async function callGetNFTsForCollectionOnce(a, startToken = "") {
-  if (n > 0) {
+  if (n > -1) {
     const url = `${baseURL}/?contractAddress=${
       a[n-1].address
     }&startToken=${startToken}`;    

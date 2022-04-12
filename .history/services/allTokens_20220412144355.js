@@ -1,5 +1,4 @@
 const axios = require("axios");
-const fs = require('fs');
 require("dotenv").config({ path: __dirname + "/.env" });
 const Pool = require("pg").Pool;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
@@ -12,13 +11,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-
-function writeConsole (a) {
-  fs.appendFile('data.txt', `${a}<br/>`, 'utf8', function (err) {
-    if (err) throw err
-  })
-}
-
 let contracts = [];
 const readSmartContractsAddress = async (req, res) => {
   pool.query("SELECT address FROM smartcontracts", (error, result) => {
@@ -26,16 +18,15 @@ const readSmartContractsAddress = async (req, res) => {
       throw error;
     } else {
       contracts = result.rows;
-      console.log(contracts.map((i) => i.address).join(" "));
-      writeConsole(contracts.map((i) => i.address).join(" "));
+      console.log(contracts.map(i=>i.address).join(' '))
       res.send(
         `<h2 style="margin-top: 20vh;text-align: center;">
         This is begin create base by <br/> 
-        contracts:<br/> ${contracts.map((i) => i.address).join(",<br/>")}
+        contracts:<br/> ${contracts.map(i=>i.address).join(' ,<br/> ')}
         </h2>`
-      );
+      )
     }
-    // callGetNFTsForCollectionOnce(startToken = "");
+    // callGetNFTsForCollectionOnce(contracts, (startToken = ""));
   });
 };
 
@@ -46,41 +37,32 @@ const web3 = createAlchemyWeb3(
 const baseURLOne = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTsForCollection`;
 const contractAddr = "0xaAdBA140Ae5e4c8a9eF0Cc86EA3124b446e3E46A";
 const baseURLTwo = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTMetadata`;
+let n = 12;
 
 const tokenType = "erc721";
 let totalNftsFound = [];
 let m = 0;
-let n = 12;
+async function callGetNFTsForCollectionOnce(a, startToken = "") {
+  const url = `${baseURLOne}/?contractAddress=${a[0].address}&startToken=${startToken}`;
+  const response = await axios.get(url);
+  const allTokens = response.data.nfts.map((i) => i.id.tokenId);
+  totalNftsFound.push(allTokens);
 
-async function callGetNFTsForCollectionOnce(startToken = "") {
-  if (n > -1) {
-    const url = `${baseURLOne}/?contractAddress=${contracts[n].address}&startToken=${startToken}`;
-    const response = await axios.get(url);
-    const allTokens = response.data.nfts.map((i) => i.id.tokenId);
-    totalNftsFound.push(allTokens);
-    let nextToken = response.data.nextToken;
-    if (nextToken) {
-      callGetNFTsForCollectionOnce(nextToken);
-    } else {
-      m = totalNftsFound.flat().length;
-      console.log(`${contracts[n].address}  ':' ${m}`);     
-      writeConsole(`${contracts[n].address}  ':' ${m}`)
-      writeToBase(contracts);
-     
-      
-    }
+  let nextToken = response.data.nextToken;
+  if (nextToken) {
+    callGetNFTsForCollectionOnce(a, nextToken);
   } else {
-    console.log('end');
-    
+    m = totalNftsFound.flat().length;
+    console.log(m);
+    //  writeToBase(a)
   }
 }
 function writeToBase(a) {
   if (m > 0) {
     const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m - 1]);
-   
     const config = {
       method: "get",
-      url: `${baseURLTwo}?contractAddress=${a[n].address}&tokenId=${tokenId}&tokenType=${tokenType}`,
+      url: `${baseURLTwo}?contractAddress=${a[1].address}&tokenId=${tokenId}&tokenType=${tokenType}`,
       headers: {},
     };
     axios(config)
@@ -97,7 +79,7 @@ function writeToBase(a) {
             }
             m = m - 1;
             writeToBase(a);
-            
+            console.log(m);
           }
         );
       })
@@ -106,12 +88,9 @@ function writeToBase(a) {
         writeToBase(a);
       });
   } else {
-    n = n - 1
-    totalNftsFound = [];
-    callGetNFTsForCollectionOnce(startToken = "")
+    console.log("end");
   }
 }
-
 
 // if ( response.data.nextToken) {
 

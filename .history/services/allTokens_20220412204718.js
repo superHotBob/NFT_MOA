@@ -12,9 +12,8 @@ const pool = new Pool({
   port: 5432,
 });
 
-
 function writeConsole (a) {
-  fs.appendFile('data.txt', `${a}<br/>`, 'utf8', function (err) {
+  fs.appendFile('data.txt', `dfgdgdfgd\r\n`, 'utf8', function (err) {
     if (err) throw err
   })
 }
@@ -64,9 +63,8 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
     } else {
       m = totalNftsFound.flat().length;
       console.log(`${contracts[n].address}  ':' ${m}`);     
-      writeConsole(`${contracts[n].address}  ':' ${m}`)
-      writeToBase(contracts);
-     
+      
+     writeToBase(contracts);
       
     }
   } else {
@@ -77,7 +75,6 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
 function writeToBase(a) {
   if (m > 0) {
     const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m - 1]);
-   
     const config = {
       method: "get",
       url: `${baseURLTwo}?contractAddress=${a[n].address}&tokenId=${tokenId}&tokenType=${tokenType}`,
@@ -97,7 +94,7 @@ function writeToBase(a) {
             }
             m = m - 1;
             writeToBase(a);
-            
+            console.log(m);
           }
         );
       })

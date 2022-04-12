@@ -1,5 +1,4 @@
 const axios = require("axios");
-const fs = require('fs');
 require("dotenv").config({ path: __dirname + "/.env" });
 const Pool = require("pg").Pool;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
@@ -12,13 +11,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-
-function writeConsole (a) {
-  fs.appendFile('data.txt', `${a}<br/>`, 'utf8', function (err) {
-    if (err) throw err
-  })
-}
-
 let contracts = [];
 const readSmartContractsAddress = async (req, res) => {
   pool.query("SELECT address FROM smartcontracts", (error, result) => {
@@ -26,8 +18,7 @@ const readSmartContractsAddress = async (req, res) => {
       throw error;
     } else {
       contracts = result.rows;
-      console.log(contracts.map((i) => i.address).join(" "));
-      writeConsole(contracts.map((i) => i.address).join(" "));
+      // console.log(contracts.map((i) => i.address).join(" "));
       res.send(
         `<h2 style="margin-top: 20vh;text-align: center;">
         This is begin create base by <br/> 
@@ -35,7 +26,7 @@ const readSmartContractsAddress = async (req, res) => {
         </h2>`
       );
     }
-    // callGetNFTsForCollectionOnce(startToken = "");
+    callGetNFTsForCollectionOnce(startToken = "");
   });
 };
 
@@ -64,20 +55,17 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
     } else {
       m = totalNftsFound.flat().length;
       console.log(`${contracts[n].address}  ':' ${m}`);     
-      writeConsole(`${contracts[n].address}  ':' ${m}`)
-      writeToBase(contracts);
-     
-      
+      totalNftsFound = [];
+      callGetNFTsForCollectionOnce(startToken = "");
+      writeToBase(contracts)
     }
   } else {
-    console.log('end');
-    
+    console.log('end')
   }
 }
 function writeToBase(a) {
   if (m > 0) {
     const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m - 1]);
-   
     const config = {
       method: "get",
       url: `${baseURLTwo}?contractAddress=${a[n].address}&tokenId=${tokenId}&tokenType=${tokenType}`,
@@ -97,7 +85,7 @@ function writeToBase(a) {
             }
             m = m - 1;
             writeToBase(a);
-            
+            console.log(m);
           }
         );
       })
@@ -106,12 +94,10 @@ function writeToBase(a) {
         writeToBase(a);
       });
   } else {
-    n = n - 1
-    totalNftsFound = [];
+    n = n-1
     callGetNFTsForCollectionOnce(startToken = "")
   }
 }
-
 
 // if ( response.data.nextToken) {
 
