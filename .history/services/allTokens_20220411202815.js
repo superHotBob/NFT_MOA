@@ -81,10 +81,7 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
             }
           );
         })
-        .catch((error) => {
-        console.log(error);
-        writeToBase(a);
-        });
+        .catch((error) => console.log(error));
     } else {
       console.log("end");
     }

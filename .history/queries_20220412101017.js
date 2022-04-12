@@ -8,9 +8,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-
-
-
 const writeActivity = (a, b, c) => {
   console.log(a, b, c);
   pool.query(
@@ -66,7 +63,7 @@ const readAllTokens = (req,res) => {
   const a = req.query.limit
   const b =  req.query.offset 
   pool.query(
-    "SELECT * FROM tokens ORDER BY tokenid ASC LIMIT $1 OFFSET $2", [a,b],
+    "SELECT * FROM tokens ORDER BY tokenid LIMIT $1 OFFSET $2", [a,b],
     (error, result) => {
       if (error) {
         throw error

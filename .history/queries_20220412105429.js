@@ -8,7 +8,12 @@ const pool = new Pool({
   port: 5432,
 });
 
-
+pool.query("UPDATE tokens SET newtokenid = tokenid WHERE  tokenid = +tokenid",(error, results) => {
+  if (error) {
+    throw error;
+  }
+}
+);
 
 
 const writeActivity = (a, b, c) => {

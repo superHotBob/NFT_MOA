@@ -33,29 +33,20 @@ let n = 12;
 
 const tokenType = "erc721";
 let totalNftsFound = [];
-let m = 0;
 async function callGetNFTsForCollectionOnce(a, startToken = "") { 
   const url = `${baseURLOne}/?contractAddress=${a[0].address}&startToken=${startToken}`;
   const response = await axios.get(url);  
   const allTokens = response.data.nfts.map(i=>i.id.tokenId);
   totalNftsFound.push(allTokens);
- 
+  let m = response.data.nfts.length;
   let nextToken = response.data.nextToken;
-  if(nextToken) {
-    callGetNFTsForCollectionOnce(a, nextToken)
-  } else {     
-     m = totalNftsFound.flat().length;
-     console.log(m)
-     writeToBase(a)
-  }
- 
- 
-  
+  console.log(totalNftsFound)
+  // writeToBase(a)
 
 }  
   function writeToBase(a) {   
     if (m > 0) {
-      const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m-1]);
+      const tokenId = web3.utils.hexToNumberString(allTokens[m-1]);
       const config = {
         method: "get",
         url: `${baseURLTwo}?contractAddress=${
@@ -81,10 +72,7 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
             }
           );
         })
-        .catch((error) => {
-        console.log(error);
-        writeToBase(a);
-        });
+        .catch((error) => console.log(error));
     } else {
       console.log("end");
     }

@@ -8,9 +8,6 @@ const pool = new Pool({
   port: 5432,
 });
 
-
-
-
 const writeActivity = (a, b, c) => {
   console.log(a, b, c);
   pool.query(

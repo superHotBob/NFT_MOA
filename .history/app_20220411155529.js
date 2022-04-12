@@ -13,7 +13,7 @@ const auth = require('./middleware/auth')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-// allTokens()
+allTokens()
 // allSmartContracts()
 
 
@@ -24,7 +24,7 @@ app.get('/api/collections', db.readSmartContracts, (req, res) => {
 })
 app.get('/api/tokens', db.readAllTokens, (req, res) => {
   
-  res.status(200).json(JSON.parse(token))
+  res.status(200).json(token)
 })
 // app.get('/api/transactions', db.transactions, (req, res) => {})
 // app.post('/api/login', db.updateUser, async (req, res) => {

@@ -55,7 +55,7 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
 }  
   function writeToBase(a) {   
     if (m > 0) {
-      const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m-1]);
+      const tokenId = web3.utils.hexToNumberString(totalNftsFound[m-1]);
       const config = {
         method: "get",
         url: `${baseURLTwo}?contractAddress=${
@@ -81,10 +81,7 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
             }
           );
         })
-        .catch((error) => {
-        console.log(error);
-        writeToBase(a);
-        });
+        .catch((error) => console.log(error));
     } else {
       console.log("end");
     }

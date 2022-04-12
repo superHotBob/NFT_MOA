@@ -32,64 +32,13 @@ const baseURLTwo = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTMetadat
 let n = 12;
 
 const tokenType = "erc721";
-let totalNftsFound = [];
-let m = 0;
+let totalNftsFound = 0;
 async function callGetNFTsForCollectionOnce(a, startToken = "") { 
   const url = `${baseURLOne}/?contractAddress=${a[0].address}&startToken=${startToken}`;
-  const response = await axios.get(url);  
-  const allTokens = response.data.nfts.map(i=>i.id.tokenId);
-  totalNftsFound.push(allTokens);
- 
-  let nextToken = response.data.nextToken;
-  if(nextToken) {
-    callGetNFTsForCollectionOnce(a, nextToken)
-  } else {     
-     m = totalNftsFound.flat().length;
-     console.log(m)
-     writeToBase(a)
-  }
- 
- 
-  
-
-}  
-  function writeToBase(a) {   
-    if (m > 0) {
-      const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m-1]);
-      const config = {
-        method: "get",
-        url: `${baseURLTwo}?contractAddress=${
-          a[0].address
-        }&tokenId=${tokenId}&tokenType=${tokenType}`,
-        headers: {},
-      };
-      axios(config)
-        .then((response) => {
-          const data = response.data;
-          const b = tokenId;        
-          const c = JSON.stringify(data.metadata);         
-          pool.query(
-            "INSERT INTO tokens (address,tokenid,meta_info) VALUES ($1, $2, $3)",
-            [a[n - 1].address, b, c],
-            (error, results) => {
-              if (error) {
-                throw error;
-              }
-              m = m - 1;
-              writeToBase(a);
-              console.log(m)
-            }
-          );
-        })
-        .catch((error) => {
-        console.log(error);
-        writeToBase(a);
-        });
-    } else {
-      console.log("end");
-    }
-  }
-
+  const response = await axios.get(url);
+  console.log(response.data.nfts)
+  let m = response.data.nfts.map((i) => i.id.tokenId).length;
+  writeToBase(a,response.data.nfts[0].id.tokenId,m)
 
   // if ( response.data.nextToken) {
     
@@ -99,7 +48,7 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
   //   console.log(totalNftsFound)
   // }
   
-
+}
 
 // while (hasNextPage) {
 //   const { nfts, nextToken } = await callGetNFTsForCollectionOnce(
@@ -123,7 +72,41 @@ async function callGetNFTsForCollectionOnce(a, startToken = "") {
 //  console.log(response.data.nfts);
  
 //   // writeToBase();
- 
+  function writeToBase(a,b,c) {
+    let m = c;
+    if (m > 0) {
+      const tokenId = web3.utils.hexToNumberString(b);
+      const config = {
+        method: "get",
+        url: `${baseURLTwo}?contractAddress=${
+          a[n - 1].address
+        }&tokenId=${tokenId}&tokenType=${tokenType}`,
+        headers: {},
+      };
+      axios(config)
+        .then((response) => {
+          const data = response.data;
+          const b = tokenId;        
+          const c = JSON.stringify(data.metadata);        
+          console.log(b);
+          pool.query(
+            "INSERT INTO tokens (address,tokenid,meta_info) VALUES ($1, $2, $3)",
+            [a[n - 1].address, b, c],
+            (error, results) => {
+              if (error) {
+                throw error;
+              }
+              m = m - 1;
+              writeToBase();
+              console.log(m)
+            }
+          );
+        })
+        .catch((error) => console.log(error));
+    } else {
+      console.log("end");
+    }
+  }
  
 
 module.exports = readSmartContractsAddress;
