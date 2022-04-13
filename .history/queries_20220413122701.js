@@ -55,7 +55,7 @@ const readOneToken = (req,res) => {
   const a = req.query.token
   const b = req.query.address
   pool.query(
-    "SELECT * FROM tokens WHERE tokenid = $1 AND address = $2", [a,b],
+    "SELECT * FROM tokens WHERE tokenid = $1 AND addres = $2", [a,b],
     (error, result) => {
       if (error) {
         throw error
