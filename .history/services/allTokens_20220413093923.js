@@ -63,7 +63,7 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
     if (nextToken) {
       callGetNFTsForCollectionOnce(nextToken);
     } else {
-      m = totalNftsFound.flat().length - 1;
+      m = totalNftsFound.flat().length - 9800;
       // console.log(`${contracts[n].address}  ':' ${m}`);     
       writeConsole(`${contracts[n].address}  ':' ${m}`)
       writeToBase(contracts[n]);
@@ -71,7 +71,6 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
       
     }
   } else {
-    writeConsole('end');
     console.log('end');
     
   }
@@ -108,7 +107,7 @@ function writeToBase(a) {
       });
   } else {
     n = n - 1
-    // console.log(n)
+    console.log(n)
     totalNftsFound = [];
     callGetNFTsForCollectionOnce(startToken = "",n)
   }

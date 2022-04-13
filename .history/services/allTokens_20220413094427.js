@@ -71,7 +71,6 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
       
     }
   } else {
-    writeConsole('end');
     console.log('end');
     
   }
@@ -108,7 +107,7 @@ function writeToBase(a) {
       });
   } else {
     n = n - 1
-    // console.log(n)
+    console.log(n)
     totalNftsFound = [];
     callGetNFTsForCollectionOnce(startToken = "",n)
   }

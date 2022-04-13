@@ -63,25 +63,25 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
     if (nextToken) {
       callGetNFTsForCollectionOnce(nextToken);
     } else {
-      m = totalNftsFound.flat().length - 1;
+      m = totalNftsFound.flat().length;
       // console.log(`${contracts[n].address}  ':' ${m}`);     
       writeConsole(`${contracts[n].address}  ':' ${m}`)
-      writeToBase(contracts[n]);
+      writeToBase(contracts);
      
       
     }
   } else {
-    writeConsole('end');
     console.log('end');
     
   }
 }
 function writeToBase(a) {
   if (m > 0) {
-    const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m - 1]);   
+    const tokenId = web3.utils.hexToNumberString(totalNftsFound.flat()[m - 9000]);
+   
     const config = {
       method: "get",
-      url: `${baseURLTwo}?contractAddress=${a.address}&tokenId=${tokenId}&tokenType=${tokenType}`,
+      url: `${baseURLTwo}?contractAddress=${a[n].address}&tokenId=${tokenId}&tokenType=${tokenType}`,
       headers: {},
     };
     axios(config)
@@ -91,7 +91,7 @@ function writeToBase(a) {
         const c = data.metadata;
         pool.query(
           "INSERT INTO tokens2 (address,tokenid,meta_info) VALUES ($1, $2, $3)",
-          [a.address, b, c],
+          [a[1].address, b, c],
           (error, results) => {
             if (error) {
               throw error;
@@ -108,9 +108,8 @@ function writeToBase(a) {
       });
   } else {
     n = n - 1
-    // console.log(n)
     totalNftsFound = [];
-    callGetNFTsForCollectionOnce(startToken = "",n)
+    callGetNFTsForCollectionOnce(startToken = "")
   }
 }
 
