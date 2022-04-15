@@ -1,6 +1,6 @@
 require('dotenv').config({path: __dirname + '/.env'})
 const addCountTokens = require('./functions/getNftCollection');
-// const writeNftToBase = require('./functions/writeToBaseTokens');
+const writeNftToBase = require('./functions/writeToBaseTokens');
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: "iuevfshp",
@@ -73,27 +73,29 @@ const readOneToken = (req,res) => {
 const addCollection = (req,res, next) => {
   const a = req.query.address
   const b = req.query.collection
-  if(req.query.address) {   
-    pool.query(
-      "INSERT INTO smartcontracts(address, name_collection) VALUES ($1, $2) RETURNING * ", [a,b],
-      (error, result) => {
-        if (error) {
-          res.send(
-            `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
-            <b style="color: red">ERROR:</b> Collection is in base
-            </div>`)
-        } else {
-          addCountTokens(a)         
-          console.log('add count tokens');
-          res.send(
-            `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
-            Collection add to base
-            </div>`)
-        }
+  if(req.query.address) {
+    writeNftToBase(a)
+    // pool.query(
+    //   "INSERT INTO smartcontracts(address, name_collection) VALUES ($1, $2) RETURNING * ", [a,b],
+    //   (error, result) => {
+    //     if (error) {
+    //       res.send(
+    //         `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
+    //         <b style="color: red">ERROR:</b> Collection is in base
+    //         </div>`)
+    //     } else {
+    //       // addCountTokens(a)
+    //       writeNftToBase(a)
+    //       console.log('add count tokens');
+    //       res.send(
+    //         `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
+    //         Collection add to base
+    //         </div>`)
+    //     }
         
-      }
+    //   }
      
-    );    
+    // );    
   } else {
     next()
   }

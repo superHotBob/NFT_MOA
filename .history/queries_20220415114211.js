@@ -93,7 +93,7 @@ const addCollection = (req,res, next) => {
         
       }
      
-    );    
+    // );    
   } else {
     next()
   }

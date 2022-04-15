@@ -64,7 +64,6 @@ async function callGetNFTsForCollectionOnce(startToken = "") {
       callGetNFTsForCollectionOnce(nextToken);
     } else {
       m = totalNftsFound.flat().length - 1;
-      totalNftsFound.push(allTokens);
       // console.log(`${contracts[n].address}  ':' ${m}`);     
       writeConsole(`${contracts[n].address}  ':' ${m}`)
       writeToBase(contracts[n]);     
