@@ -21,14 +21,13 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
  
   res.send(
     `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
-    <form method="get" action='/api/addnewcontract'>
+    <form method="get" action='/api/addcontract'>
     <label>
     <input 
       type='text'
       required
-      pattern="^0x[0-9a-fA-F]{40}$"
       name='address' 
-      placeholder='smartcontract address' 
+      placeholder='smartcontract name' 
       style="padding: 20;
         width: 100%;
         margin: 30px auto;font-size: 20px;"
@@ -52,7 +51,6 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
 });
 
 app.get("/api/getcollections", db.readSmartContracts, (req, res) => {
-  
   res.status(200).json(token);
 });
 app.get("/api/getalltokens", db.readAllTokens, (req, res) => {

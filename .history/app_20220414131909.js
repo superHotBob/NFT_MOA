@@ -52,7 +52,7 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
 });
 
 app.get("/api/getcollections", db.readSmartContracts, (req, res) => {
-  
+  console.log(req.path)
   res.status(200).json(token);
 });
 app.get("/api/getalltokens", db.readAllTokens, (req, res) => {

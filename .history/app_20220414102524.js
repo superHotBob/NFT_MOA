@@ -6,7 +6,6 @@ const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
 
-
 const app = express();
 
 const auth = require("./middleware/auth");
@@ -17,18 +16,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // allTokens()
 // allSmartContracts()
 
-app.get("/api/addnewcontract", db.addCollection, (req, res) => {
- 
+app.get("/api/addcontract", (req, res) => {
+  console.log(req.query.address)
   res.send(
     `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
-    <form method="get" action='/api/addnewcontract'>
+    <form method="get" action='/api/addcontract'>
     <label>
     <input 
       type='text'
       required
-      pattern="^0x[0-9a-fA-F]{40}$"
       name='address' 
-      placeholder='smartcontract address' 
+      placeholder='smartcontract name' 
       style="padding: 20;
         width: 100%;
         margin: 30px auto;font-size: 20px;"
@@ -51,14 +49,13 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
   );
 });
 
-app.get("/api/getcollections", db.readSmartContracts, (req, res) => {
-  
+app.get("/api/getCollections", db.readSmartContracts, (req, res) => {
   res.status(200).json(token);
 });
-app.get("/api/getalltokens", db.readAllTokens, (req, res) => {
+app.get("/api/getAllTokens", db.readAllTokens, (req, res) => {
   res.status(200).json(JSON.parse(token));
 });
-app.get("/api/getonetoken", db.readOneToken, (req, res) => {
+app.get("/api/getOneToken", db.readOneToken, (req, res) => {
   res.status(200).json(JSON.parse(token));
 });
 app.get("/api/createbase", auth, allTokens, (req, res) => {

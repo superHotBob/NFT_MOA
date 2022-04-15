@@ -1,6 +1,6 @@
 const axios = require("axios");
 require("dotenv").config({ path: __dirname + "/.env" });
-
+import getImageToken from "../functions/getImageCollection";
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: "iuevfshp",
@@ -18,7 +18,7 @@ const readSmartContractsAddress = async () => {
       contracts = result.rows;     
     }
     callGetNFTsForCollectionOnce(contracts);    
-   
+    // getImageToken(contracts);
   });
 };
 

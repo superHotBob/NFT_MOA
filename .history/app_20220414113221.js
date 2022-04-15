@@ -28,7 +28,7 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
       required
       pattern="^0x[0-9a-fA-F]{40}$"
       name='address' 
-      placeholder='smartcontract address' 
+      placeholder='smartcontract name' 
       style="padding: 20;
         width: 100%;
         margin: 30px auto;font-size: 20px;"
@@ -52,7 +52,6 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
 });
 
 app.get("/api/getcollections", db.readSmartContracts, (req, res) => {
-  
   res.status(200).json(token);
 });
 app.get("/api/getalltokens", db.readAllTokens, (req, res) => {

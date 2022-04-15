@@ -1,5 +1,4 @@
 require('dotenv').config({path: __dirname + '/.env'})
-const addCountTokens = require('./functions/getNftCollection');
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: "iuevfshp",
@@ -9,7 +8,6 @@ const pool = new Pool({
   port: 5432,
 });
 const readSmartContracts = (req,res) => { 
-  console.log(req.path)
   const a = req.query.address
   const b =  req.query.name 
   if (a || b) {
@@ -77,17 +75,12 @@ const addCollection = (req,res, next) => {
       "INSERT INTO smartcontracts(address, name_collection) VALUES ($1, $2) RETURNING * ", [a,b],
       (error, result) => {
         if (error) {
-          res.send(
-            `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
-            <b style="color: red">ERROR:</b> Collection is in base
-            </div>`)
+          throw error
         } else {
-          addCountTokens(a)
-          console.log('add count tokens');
           res.send(
             `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
             Collection add to base
-            </div>`)
+            </div>`
         }
         
       }

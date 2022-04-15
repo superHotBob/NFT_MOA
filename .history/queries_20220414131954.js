@@ -1,5 +1,4 @@
 require('dotenv').config({path: __dirname + '/.env'})
-const addCountTokens = require('./functions/getNftCollection');
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: "iuevfshp",
@@ -82,8 +81,6 @@ const addCollection = (req,res, next) => {
             <b style="color: red">ERROR:</b> Collection is in base
             </div>`)
         } else {
-          addCountTokens(a)
-          console.log('add count tokens');
           res.send(
             `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
             Collection add to base
