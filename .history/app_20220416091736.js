@@ -91,14 +91,11 @@ app.get("/test_server", auth, (req, res) => {
     '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
   );
 });
-
-app.get('/', function (req, res) {
-  res.render('index', { title: 'My server', message: 'Hello My Friend!'});
-});
-
 app.get('*', (req, res) => {
   res.send(`<h1 style="margin-top: 40vh;text-align: center;">
   404! This is an invalid URL.</h1>`);
 });
-
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!'});
+});
 module.exports = app;

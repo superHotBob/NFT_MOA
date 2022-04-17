@@ -93,7 +93,7 @@ app.get("/test_server", auth, (req, res) => {
 });
 
 app.get('/', function (req, res) {
-  res.render('index', { title: 'My server', message: 'Hello My Friend!'});
+  res.render('index', { title: 'Hey', message: 'Hello there!'});
 });
 
 app.get('*', (req, res) => {

@@ -5,9 +5,9 @@ const express = require("express");
 const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
-const app = express();
-app.set('view engine', 'pug');
 
+app.set('view engine', 'pug');
+const app = express();
 
 const auth = require("./middleware/auth");
 app.use(require("express-status-monitor")());
@@ -91,14 +91,8 @@ app.get("/test_server", auth, (req, res) => {
     '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
   );
 });
-
-app.get('/', function (req, res) {
-  res.render('index', { title: 'My server', message: 'Hello My Friend!'});
-});
-
 app.get('*', (req, res) => {
   res.send(`<h1 style="margin-top: 40vh;text-align: center;">
   404! This is an invalid URL.</h1>`);
 });
-
 module.exports = app;

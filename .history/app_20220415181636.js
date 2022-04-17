@@ -5,9 +5,9 @@ const express = require("express");
 const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
-const app = express();
-app.set('view engine', 'pug');
 
+
+const app = express();
 
 const auth = require("./middleware/auth");
 app.use(require("express-status-monitor")());
@@ -56,10 +56,10 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
 //   })
 // }
 app.use((req, res, next) => {
-  const new_time = new Date(Date.now())
-  fs.appendFile('data.txt', `<p>${req.url}:${new_time}</p>\r\n`, 'utf8', function (err) {
+  fs.appendFile('data.txt', `Request from ${req.url} + new Date(Date.now()<br/>`, 'utf8', function (err) {
     if (err) throw err
-  })  
+  })
+  
   next();
 });
 app.get("/api/getcollections", db.readSmartContracts, (req, res) => {  
@@ -91,14 +91,8 @@ app.get("/test_server", auth, (req, res) => {
     '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
   );
 });
-
-app.get('/', function (req, res) {
-  res.render('index', { title: 'My server', message: 'Hello My Friend!'});
-});
-
 app.get('*', (req, res) => {
   res.send(`<h1 style="margin-top: 40vh;text-align: center;">
   404! This is an invalid URL.</h1>`);
 });
-
 module.exports = app;
