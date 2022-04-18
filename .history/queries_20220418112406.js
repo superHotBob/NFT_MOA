@@ -70,7 +70,7 @@ const addCollection = (req, res, next) => {
   const a = req.query.address;
   const b = req.query.collection;
   const c = req.query.doing;
-  // console.log(a, b, c);
+  console.log(a, b, c);
   if (a) {
     if (c === "create") {
       pool.query(

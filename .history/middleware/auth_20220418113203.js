@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 
+
+
 const verifyToken = (req, res, next) => {
   // const token =
   //   req.body.token || req.query.password || req.headers["x-access-token"];
@@ -10,7 +12,7 @@ const verifyToken = (req, res, next) => {
 
   if (req.query.address) {
     if (req.query.password === "hellobob") {
-      // console.log(req.query.password);
+      console.log(req.query.password);
       return next();
     } else {
       return res.status(401).send("Invalid password");
