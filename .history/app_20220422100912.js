@@ -2,18 +2,16 @@ const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const express = require("express");
-const path = require('path');
-const public = path.join(__dirname, 'public');
 const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
 const app = express();
 app.set('view engine', 'pug');
 
+const router = express.Router()
 
 const auth = require("./middleware/auth");
 const my_request = require("./controllers/404");
-app.use(express.static(public));
 app.use(require("express-status-monitor")());
 app.use(cors());
 app.use(bodyParser.json());
@@ -130,13 +128,6 @@ app.get("/test_server", auth, (req, res) => {
 //   404! This is an invalid URL.</h1>`);
 // });
 app.route('/').get(my_request.get_hello);
-app.get('/', function(req, res) {
-  res.sendFile(path.join(public, 'index.html'));
-});
-
-
 app.route('*').get(my_request.get_404);
-
-
 
 module.exports = app;

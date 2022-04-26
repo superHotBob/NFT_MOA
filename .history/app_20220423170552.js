@@ -129,7 +129,7 @@ app.get("/test_server", auth, (req, res) => {
 //   res.send(`<h1 style="margin-top: 40vh;text-align: center;">
 //   404! This is an invalid URL.</h1>`);
 // });
-app.route('/').get(my_request.get_hello);
+// app.route('/').get(my_request.get_hello);
 app.get('/', function(req, res) {
   res.sendFile(path.join(public, 'index.html'));
 });

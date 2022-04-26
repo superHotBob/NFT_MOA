@@ -11,9 +11,9 @@ const app = express();
 app.set('view engine', 'pug');
 
 
+app.use('/',express.static(public));
 const auth = require("./middleware/auth");
 const my_request = require("./controllers/404");
-app.use(express.static(public));
 app.use(require("express-status-monitor")());
 app.use(cors());
 app.use(bodyParser.json());
@@ -136,7 +136,6 @@ app.get('/', function(req, res) {
 
 
 app.route('*').get(my_request.get_404);
-
 
 
 module.exports = app;

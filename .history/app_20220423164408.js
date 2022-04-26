@@ -10,10 +10,10 @@ const allTokens = require("./services/allTokens");
 const app = express();
 app.set('view engine', 'pug');
 
-
+const router = express.Router()
+app.use('/admin',express.static('public'));
 const auth = require("./middleware/auth");
 const my_request = require("./controllers/404");
-app.use(express.static(public));
 app.use(require("express-status-monitor")());
 app.use(cors());
 app.use(bodyParser.json());
@@ -130,13 +130,12 @@ app.get("/test_server", auth, (req, res) => {
 //   404! This is an invalid URL.</h1>`);
 // });
 app.route('/').get(my_request.get_hello);
-app.get('/', function(req, res) {
-  res.sendFile(path.join(public, 'index.html'));
-});
+// app.get('/admin', function(req, res) {
+//   res.sendFile(path.join(public, 'index.html'));
+// });
 
 
 app.route('*').get(my_request.get_404);
-
 
 
 module.exports = app;
