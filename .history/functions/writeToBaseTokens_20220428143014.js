@@ -52,7 +52,7 @@ function writeToBase(a) {
         const data = response.data;
         const b = tokenId;
         const c = data.metadata;
-        
+        console.log(response.data)
         pool.query(
           "INSERT INTO tokens (address,tokenid,meta_info) VALUES ($1, $2, $3)",
           [a, b, c],
@@ -67,8 +67,8 @@ function writeToBase(a) {
         );
       })
       .catch((error) => {
-        console.log('error');
-        writeToBase(a);
+        console.log(error);
+        // writeToBase(a);
       });
   } else {    
     console.log('end')    

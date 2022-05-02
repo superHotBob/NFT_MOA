@@ -7,7 +7,7 @@ const public = path.join(__dirname, 'public');
 const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
-const findOwner = require('./services/findOwner');
+const myContract = require('./services/findOwner');
 const app = express();
 app.set('view engine', 'pug');
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // allTokens()
 // allSmartContracts()
-// findOwner()
+// myContract()
 
 app.get("/api/addnewcontract", db.addCollection, (req, res) => {
  
@@ -123,12 +123,41 @@ app.get("/test_server", auth, (req, res) => {
   );
 });
 
+app.post("/upload-file", async (req, res) => {
+  console.log(req.data);
+  try {
+      if (!req.files) {
+          res.send({
+              status: "failed",
+              message: "No file uploaded",
+          });
+      } else {
+          let file = req.files.file;
+
+          console.log(req.files);
+
+          file.mv("./uploads/" + file.name);
+
+          res.send({
+              status: "success",
+              message: "File is uploaded",
+              data: {
+                  name: file.name,
+                  mimetype: file.mimetype,
+                  size: file.size,
+              },
+          });
+      }
+  } catch (err) {
+      res.status(500).send(err);
+  }
+});
 
 
 app.route('/').get(my_request.get_hello);
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(public, 'index.html'));
-// });
+app.get('/', function(req, res) {
+  res.sendFile(path.join(public, 'index.html'));
+});
 
 
 app.route('*').get(my_request.get_404);

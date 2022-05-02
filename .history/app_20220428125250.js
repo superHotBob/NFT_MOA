@@ -7,7 +7,6 @@ const public = path.join(__dirname, 'public');
 const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
-const findOwner = require('./services/findOwner');
 const app = express();
 app.set('view engine', 'pug');
 
@@ -21,10 +20,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // allTokens()
 // allSmartContracts()
-// findOwner()
 
 app.get("/api/addnewcontract", db.addCollection, (req, res) => {
- 
+ console.log('csdfsd')
   res.send(
     `<div style="width: 35%;margin: 20vw auto;font-size: 23px">
     <form method="get" action='/api/addnewcontract'>
@@ -123,12 +121,18 @@ app.get("/test_server", auth, (req, res) => {
   );
 });
 
-
-
-app.route('/').get(my_request.get_hello);
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(public, 'index.html'));
+// app.get('/', function (req, res) {
+//   res.render('index', { title: 'My server', message: 'Hello My Friend!'});
 // });
+
+// app.get('*', (req, res) => {
+//   res.send(`<h1 style="margin-top: 40vh;text-align: center;">
+//   404! This is an invalid URL.</h1>`);
+// });
+app.route('/').get(my_request.get_hello);
+app.get('/', function(req, res) {
+  res.sendFile(path.join(public, 'index.html'));
+});
 
 
 app.route('*').get(my_request.get_404);

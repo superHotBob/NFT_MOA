@@ -52,23 +52,23 @@ function writeToBase(a) {
         const data = response.data;
         const b = tokenId;
         const c = data.metadata;
-        
-        pool.query(
-          "INSERT INTO tokens (address,tokenid,meta_info) VALUES ($1, $2, $3)",
-          [a, b, c],
-          (error, results) => {
-            if (error) {
-              throw error;
-            }
-            m = m - 1;
-            writeToBase(a);
-            console.log(m);
-          }
-        );
+        console.log(response.data)
+        // pool.query(
+        //   "INSERT INTO tokens (address,tokenid,meta_info) VALUES ($1, $2, $3)",
+        //   [a, b, c],
+        //   (error, results) => {
+        //     if (error) {
+        //       throw error;
+        //     }
+        //     m = m - 1;
+        //     writeToBase(a);
+        //     console.log(m);
+        //   }
+        // );
       })
       .catch((error) => {
-        console.log('error');
-        writeToBase(a);
+        console.log(error);
+        // writeToBase(a);
       });
   } else {    
     console.log('end')    

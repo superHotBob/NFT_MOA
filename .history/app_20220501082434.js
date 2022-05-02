@@ -7,7 +7,7 @@ const public = path.join(__dirname, 'public');
 const db = require("./queries");
 const allSmartContracts = require("./services/allSmartContracts");
 const allTokens = require("./services/allTokens");
-const findOwner = require('./services/findOwner');
+const myContract = require('./services/findOwner');
 const app = express();
 app.set('view engine', 'pug');
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // allTokens()
 // allSmartContracts()
-// findOwner()
+// myContract()
 
 app.get("/api/addnewcontract", db.addCollection, (req, res) => {
  

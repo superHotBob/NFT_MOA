@@ -14,10 +14,9 @@ const readSmartContracts = (req, res) => {
   const a = req.query.address;
   const b = req.query.name;
   const c = req.query.keyword;
-
-  if (a || b || c) {
+  if (a || b) {
     pool.query(
-      "SELECT * FROM smartcontracts WHERE address = $1  OR name_collection ILIKE $2 OR position($3 in keyword)>0 ",
+      "SELECT * FROM smartcontracts WHERE address = $1  OR name_collection ILIKE $2 OR strpos($3, keyword) > 0 ",
       [a, "%" + b + "%", c],
       (error, result) => {
         if (error) {

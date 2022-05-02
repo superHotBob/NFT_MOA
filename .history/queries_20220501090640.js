@@ -13,12 +13,10 @@ const readSmartContracts = (req, res) => {
   console.log(req.path);
   const a = req.query.address;
   const b = req.query.name;
-  const c = req.query.keyword;
-
-  if (a || b || c) {
+  if (a || b) {
     pool.query(
-      "SELECT * FROM smartcontracts WHERE address = $1  OR name_collection ILIKE $2 OR position($3 in keyword)>0 ",
-      [a, "%" + b + "%", c],
+      "SELECT * FROM smartcontracts WHERE address = $1  OR name_collection ILIKE $2 ",
+      [a, "%" + b + "%"],
       (error, result) => {
         if (error) {
           throw error;
@@ -56,7 +54,6 @@ const readAllTokens = (req, res) => {
 const readOneToken = (req, res) => {
   const a = req.query.token;
   const b = req.query.address;
-  console.log(a, b);
   pool.query(
     "SELECT * FROM tokens WHERE tokenid = $1 AND address = $2",
     [a, b],
@@ -64,7 +61,6 @@ const readOneToken = (req, res) => {
       if (error) {
         throw error;
       } else {
-        console.log(result.rows);
         res.json(result.rows);
       }
     }
@@ -88,7 +84,8 @@ const addCollection = (req, res, next) => {
             </div>`
             );
           } else {
-            addCountTokens(req, res, a);
+            addCountTokens(a);
+            console.log("add count tokens");
             res.send(
               `<div style="width: 30%;margin: 20vw auto;font-size: 20px">
             Collection add to base

@@ -67,7 +67,7 @@ function writeToBase(a) {
         );
       })
       .catch((error) => {
-        console.log('error');
+        console.log(error);
         writeToBase(a);
       });
   } else {    

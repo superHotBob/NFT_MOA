@@ -18,11 +18,11 @@ const apiKey = process.env.API_TOKEN;
 const web3 = createAlchemyWeb3(
   "https://eth-mainnet.alchemyapi.io/v2/${apiKey}"
 );
-const baseURL = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTsForCollection`;
+const baseURLOne = `https://eth-mainnet.alchemyapi.io/v2/${apiKey}/getNFTsForCollection`;
 
 let totalNftsFound = 0;
 async function callGetNFTsForCollectionOnce(a,startToken = "") {   
-      const url = `${baseURL}/?contractAddress=${a}&startToken=${startToken}`;
+      const url = `${baseURLOne}/?contractAddress=${a}&startToken=${startToken}`;
       const response = await axios.get(url);
       const allTokens = response.data.nfts.map((i) => i.id.tokenId);
       let firstTokenId = 0;
@@ -30,7 +30,7 @@ async function callGetNFTsForCollectionOnce(a,startToken = "") {
       let nextToken = response.data.nextToken;
       if (nextToken) {
         totalNftsFound = totalNftsFound + allTokens.length  
-        console.log('Total NFT found',totalNftsFound)  
+        console.log(totalNftsFound)  
         callGetNFTsForCollectionOnce(a,nextToken)
       } else {
         totalNftsFound = totalNftsFound + allTokens.length        
@@ -42,7 +42,7 @@ async function callGetNFTsForCollectionOnce(a,startToken = "") {
               if (error) {
                 throw error
               } else {
-                console.log('Write to base',result.rows)
+                console.log(result.rows)
                 writeImageToBase(a,firstTokenId)
               }      
             }   

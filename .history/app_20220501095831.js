@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // allTokens()
 // allSmartContracts()
-// findOwner()
+findOwner()
 
 app.get("/api/addnewcontract", db.addCollection, (req, res) => {
  
