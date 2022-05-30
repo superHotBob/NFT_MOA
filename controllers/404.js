@@ -9,6 +9,11 @@ const my_request = {
     },
     get_hello: function(req, res) {
         res.render('index', { title: 'My server', message: 'Hello My Friend!'});
+    },
+    test: function(req, res) {
+        res.send(
+            '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
+          );
     }
 }    
  

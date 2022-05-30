@@ -20,7 +20,7 @@ let contracts = [];
 let countContracts = 0;
 
 function findOwner(req, res) {
-    ReadIdToken("0xba30e5f9bb24caa003e9f2f0497ad287fdf95623");
+    ReadIdToken("0x1a2F71468F656E97c2F86541E57189F59951efe7");
 //   pool.query("SELECT address FROM smartcontracts", (error, result) => {
 //     if (error) {
 //       throw error;
@@ -84,16 +84,17 @@ async function ReadOwner(address, b) {
   };
   axios(config)
     .then((response) => {
-      const price = (Math.random() * 10).toFixed(2); 
+     
       pool.query(
         "UPDATE tokens SET owner = $1 , current_price = $2 WHERE address = $3",
-        [response.data.owners[0], price, address],
+        [response.data.owners[0], 0.25, address],
         (error, results) => {
           if (error) {
             throw error;
           }         
          num = num + 1;
-         WriteToBaseOwner(address);
+         console.log(results.rows)
+        //  WriteToBaseOwner(address);
         }
       );
     })
@@ -166,41 +167,14 @@ function writeToBase(a) {
         writeToBase(a);
       });
   } else {
-    n = n - 1;
-    // console.log(n)
+    n = n - 1;   
     totalNftsFound = [];
     callGetNFTsForCollectionOnce((startToken = ""), n);
   }
 }
 
-// if ( response.data.nextToken) {
 
-//  totalNftsFound += response.data.nfts.length;
-//  callGetNFTsForCollectionOnce(a, response.data.nextToken)
-// } else {
-//   console.log(totalNftsFound)
-// }
 
-// while (hasNextPage) {
-//   const { nfts, nextToken } = await callGetNFTsForCollectionOnce(
-//     startToken
-//   );
-//   if (!nextToken) {
-//     // When nextToken is not present, then there are no more NFTs to fetch.
-//     hasNextPage = false;
-//   }
-//   startToken = nextToken;
-//   totalNftsFound += nfts.length;
-// }
-
-// async function callGetNFTsForCollectionOnce(a, startToken = "") {
-//   const url = `${baseURLOne}/?contractAddress=${
-//     a[n - 1].address
-//   }&startToken=${startToken}`;
-//   const response = await axios.get(url);
-//  console.log(response.data.nfts);
-
-//   // writeToBase();
 function writeConsole(a) {
     fs.appendFile("data.txt", `${a}<br/>`, "utf8", function (err) {
       if (err) throw err;

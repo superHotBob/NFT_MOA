@@ -10,10 +10,17 @@ const allTokens = require("./services/allTokens");
 const findOwner = require('./services/findOwner');
 const app = express();
 app.set('view engine', 'pug');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerDocument = require('./swagger.json');
+
+
+
 
 
 const auth = require("./middleware/auth");
 const my_request = require("./controllers/404");
+const my_swager = require('./controllers/swagger');
 app.use(express.static(public));
 app.use(require("express-status-monitor")());
 app.use(cors());
@@ -117,20 +124,21 @@ app.get("/api/console", (req, res) => {
   });
 });
 
-app.get("/test_server", auth, (req, res) => {
-  res.send(
-    '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
-  );
-});
+// app.get("/test_server", auth, (req, res) => {
+//   res.send(
+//     '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
+//   );
+// });
 
 
 
 app.route('/').get(my_request.get_hello);
+app.route('/test_server').get(my_request.test);
 // app.get('/', function(req, res) {
 //   res.sendFile(path.join(public, 'index.html'));
 // });
-
-
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.route('/api-docs').get(swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.route('*').get(my_request.get_404);
 
 
