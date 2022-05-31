@@ -9,7 +9,14 @@ const pool = new Pool({
   password: process.env.DATABASE_PASSWORD,
   port: 5432,
 });
-const readSmartContracts = (req, res) => {
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "nftmoa",
+//   password:  "qwer1@1@",
+//   port: 5432,
+// });
+const readCollections = (req, res) => {
   console.log(req.path);
   const a = req.query.address;
   const b = req.query.name;
@@ -17,7 +24,7 @@ const readSmartContracts = (req, res) => {
 
   if (a || b || c) {
     pool.query(
-      "SELECT * FROM smartcontracts WHERE address = $1  OR name_collection ILIKE $2 OR position($3 in keyword)>0 ",
+      "SELECT * FROM collections WHERE address = $1  OR name_collection ILIKE $2 OR position($3 in keyword)>0 ",
       [a, "%" + b + "%", c],
       (error, result) => {
         if (error) {
@@ -28,7 +35,7 @@ const readSmartContracts = (req, res) => {
       }
     );
   } else {
-    pool.query("SELECT * FROM smartcontracts ", (error, result) => {
+    pool.query("SELECT * FROM collections ", (error, result) => {
       if (error) {
         throw error;
       } else {
@@ -145,7 +152,7 @@ const addCollection = (req, res, next) => {
 };
 
 module.exports = {
-  readSmartContracts,
+  readCollections,
   readAllTokens,
   readOneToken,
   addCollection,

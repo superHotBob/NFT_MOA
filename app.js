@@ -100,7 +100,7 @@ app.use((req, res, next) => {
   })  
   next();
 });
-app.get("/api/getcollections", db.readSmartContracts, (req, res) => {  
+app.get("/api/getcollections", db.readCollections, (req, res) => {  
   res.status(200).json(token);
 });
 app.get("/api/getalltokens", db.readAllTokens, (req, res) => {
