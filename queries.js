@@ -13,8 +13,8 @@ const pool = new Pool({
   user: "postgres",
   host: "localhost",
   database: "nftmoa",
-  // password: "Re185url12wow",
-  password:  "qwer1@1@",
+  password: "Re185url12wow",
+  // password:  "qwer1@1@",
   port: 5432,
 });
 const readCollections = (req, res) => {
