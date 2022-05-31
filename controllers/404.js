@@ -15,6 +15,5 @@ const my_request = {
             '<h1 style="margin-top: 40vh;text-align: center;">This is test server request</h1>'
           );
     }
-}    
- 
+}     
  module.exports = my_request

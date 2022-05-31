@@ -1,5 +1,5 @@
 const cors = require("cors");
-const fs = require("fs");
+// const fs = require("fs");
 const bodyParser = require("body-parser");
 const express = require("express");
 const path = require('path');
@@ -93,13 +93,13 @@ app.get("/api/addnewcontract", db.addCollection, (req, res) => {
 //     if (err) throw err
 //   })
 // }
-app.use((req, res, next) => {
-  const new_time = new Date(Date.now())
-  fs.appendFile('data.txt', `<p>${req.url}:${new_time}</p>\r\n`, 'utf8', function (err) {
-    if (err) throw err
-  })  
-  next();
-});
+// app.use((req, res, next) => {
+//   const new_time = new Date(Date.now())
+//   fs.appendFile('data.txt', `<p>${req.url}:${new_time}</p>\r\n`, 'utf8', function (err) {
+//     if (err) throw err
+//   })  
+//   next();
+// });
 app.get("/api/getcollections", db.readCollections, (req, res) => {  
   res.status(200).json(token);
 });
@@ -116,13 +116,13 @@ app.get("/api/createbase", auth, allTokens, (req, res) => {
       '<h1 style="margin-top: 40vh;text-align: center;">Base begining created</h1>'
     );
 });
-app.get("/api/console", (req, res) => {
-  fs.readFile("data.txt", function (err, data) {
-    res
-      .status(200)
-      .send(`<p style="margin-top: 40vh;text-align: center;">${data}</p>`);
-  });
-});
+// app.get("/api/console", (req, res) => {
+//   fs.readFile("data.txt", function (err, data) {
+//     res
+//       .status(200)
+//       .send(`<p style="margin-top: 40vh;text-align: center;">${data}</p>`);
+//   });
+// });
 
 // app.get("/test_server", auth, (req, res) => {
 //   res.send(

@@ -2,20 +2,21 @@ require("dotenv").config({ path: __dirname + "/.env" });
 const addCountTokens = require("./functions/getNftCollection");
 // const writeNftToBase = require('./functions/writeToBaseTokens');
 const Pool = require("pg").Pool;
-const pool = new Pool({
-  user: "iuevfshp",
-  host: "dumbo.db.elephantsql.com",
-  database: "iuevfshp",
-  password: process.env.DATABASE_PASSWORD,
-  port: 5432,
-});
 // const pool = new Pool({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "nftmoa",
-//   password:  "qwer1@1@",
+//   user: "iuevfshp",
+//   host: "dumbo.db.elephantsql.com",
+//   database: "iuevfshp",
+//   password: process.env.DATABASE_PASSWORD,
 //   port: 5432,
 // });
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "nftmoa",
+  // password: "Re185url12wow",
+  password:  "qwer1@1@",
+  port: 5432,
+});
 const readCollections = (req, res) => {
   console.log(req.path);
   const a = req.query.address;
